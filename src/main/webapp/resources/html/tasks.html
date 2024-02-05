@@ -1,0 +1,96 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Good Thymes Virtual Grocery</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="style/style.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="table_centered">
+    <h1>Task list</h1>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>id</th>
+            <th>description</th>
+            <th>status</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task:${tasks}">
+            <td th:text="${task.id}"/>
+            <td th:text="${task.description}" th:id="'description_'+${task.id}"/>
+            <td th:text="${task.status}" th:id="'status_'+${task.id}">
+            </td>
+            <td>
+                <button class="btn btn-primary" th:id="'edit_' + ${task.id}" th:onclick="'edit_task('+ ${task.id} +')'">
+                    edit
+                </button>
+                <button class="btn btn-primary" th:id="'save_' + ${task.id}" th:onclick="'save_task('+ ${task.id} +')'" hidden="hidden">
+                    save
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-danger" th:id="'delete_' + ${task.id}"
+                        th:onclick="'delete_task('+ ${task.id} +')'">delete
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <h3>Add new task</h3>
+            </td>
+        </tr>
+        <tr class="table-primary">
+            <td>
+            </td>
+            <td>
+                <input class='form-control' id="input_new_task_description"/>
+            </td>
+            <td>
+                <select class="form-select" id="input_new_task_status">
+                    <option value="IN_PROGRESS">IN_PROGRESS</option>
+                    <option value="DONE">DONE</option>
+                    <option value="PAUSED">PAUSED</option>
+                </select>
+            </td>
+            <td>
+                <th:button class="btn btn-success" th:onclick="'add_task('+${page_count}+')'">add</th:button>
+            </td>
+            <td>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+    <div class="outer-div">
+        <div class="inner-div">
+            <nav>
+                <ul class="pagination">
+                    <li th:each="pageNumber : ${page_numbers}" class="page-item"
+                        th:classappend="${pageNumber == current_page? 'active' : ''}">
+                        <a class="page-link" th:href="@{/(page=${pageNumber}, limit=10)}" th:text="${pageNumber}"/>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+
+<script src="script/javascript.js"></script>
+<script src="script/jquery-3.7.1.min.js"></script>
+
+
+</html>
